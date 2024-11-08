@@ -1,0 +1,15 @@
+<nav [class.fixed]="isFixed">
+  <a [routerLink]="['']" id="logo">Logo</a>
+  <ul>
+    <li [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Home</li>
+    <li [routerLink]="['/about']" [routerLinkActive]="['active']">About</li>
+    <li [routerLink]="['/contact']" [routerLinkActive]="['active']">Contact</li>
+  </ul>
+  <div class="nav-button">
+    <a><img width="30" height="30" ngSrc="https://img.icons8.com/material-outlined/200/000000/shopping-cart--v1.png" alt="shopping-cart--v1"/><span>{{ cartItemCount > 99 ? '99' : cartItemCount }}</span></a>
+    <a [routerLink]="isLoggedIn ? ['/dashboard'] : ['/login']"  ><img width="30" height="30"
+                                      ngSrc="https://img.icons8.com/material-outlined/200/000000/user--v1.png" alt="user--v1"/></a>
+  </div>
+</nav>
+<div class="back-to-top" [class.fixed]="isFixed" (click)="scrollToTop()"><img width="20" height="20" ngSrc="https://img.icons8.com/material-outlined/200/FFFFFF/double-up.png"
+                              alt="double-up"/></div>

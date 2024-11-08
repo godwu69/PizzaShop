@@ -1,0 +1,146 @@
+nav{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 5%;
+  background-color: transparent;
+  z-index: 100;
+}
+
+ul{
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  flex: 1;
+}
+
+ul li{
+  font-size: 16px;
+  color: #000000;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  padding: 10px 0;
+}
+
+ul li::before{
+  content: '';
+  position: absolute;
+  bottom: 7px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ff7500;
+  transition: all 0.4s ease-in-out;
+}
+
+ul li:hover, ul li.active{
+  color: #ff7500;
+}
+
+ul li:hover::before, ul li.active::before{
+  width: 100%;
+}
+
+#logo{
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+#logo:first-letter{
+  color: #ff7500;
+}
+
+.nav-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-button a{
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+
+.nav-button a span {
+  position: absolute;
+  right: -10px;
+  top: -5px;
+  background: #ff7500;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #ffffff;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+nav.fixed {
+  position: fixed;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  animation: navbar-animation 0.7s forwards;
+}
+
+@keyframes navbar-animation {
+  from {
+    opacity: 0;
+    top: -50px;
+  }
+  to{
+    opacity: 1;
+    top: 0;
+  }
+}
+
+.back-to-top{
+  position: fixed;
+  background-color: #ff7500;
+  right: 3%;
+  top: 60%;
+  opacity: 0;
+  border-radius: 50%;
+  padding: 15px;
+  width: 20px;
+  height: 20px;
+  box-sizing: unset;
+  transition: all 0.4s ease-in-out;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.back-to-top.fixed{
+  top: 95%;
+  transform: translateY(-95%);
+  opacity: 1;
+  visibility: visible;
+  cursor: pointer;
+}
+
+.back-to-top:hover{
+  background-color: #000000;
+}

@@ -1,0 +1,55 @@
+<div id="login-container">
+  <form id="login-form" [formGroup]="form" (submit)="login()">
+    <div class="form-header">
+      <h1>Welcome Back</h1>
+      <p>Please fill in all fields</p>
+    </div>
+    <div class="form-body">
+      <div class="form-group" [ngClass]="{'error': submitted && form.get('username')?.invalid}">
+        <input type="text" name="username" id="username" placeholder="Username" formControlName="username" required>
+        <label for="username">Username</label>
+      </div>
+      <div *ngIf="submitted && form.get('username')?.errors" class="error-mess">
+        <ng-container *ngIf="form.get('username')?.hasError('required')">
+          Username is required.
+        </ng-container>
+        <ng-container *ngIf="form.get('username')?.hasError('minlength') && !form.get('username')?.hasError('required')">
+          Username must be at least 6 characters long.
+        </ng-container>
+        <ng-container *ngIf="form.get('username')?.hasError('pattern') && !form.get('username')?.hasError('minlength') && !form.get('username')?.hasError('required')">
+          Username must only contain English letters.
+        </ng-container>
+      </div>
+      <div class="form-group" [ngClass]="{'error': submitted && form.get('password')?.invalid}">
+        <input [type]="isShowPassword ? 'text' : 'password'" name="password" id="password" placeholder="password" formControlName="password" required>
+        <label for="password">Password</label>
+        <img class="toggle-password" (click)="toggleShowPassword()" *ngIf="isShowPassword" width="20" height="20"
+             ngSrc="https://img.icons8.com/material-outlined/200/000000/visible--v1.png" alt="visible--v1"/>
+
+        <img class="toggle-password" (click)="toggleShowPassword()" *ngIf="!isShowPassword" width="20" height="20"
+             ngSrc="https://img.icons8.com/material-outlined/200/000000/hide.png" alt="hide"/>
+      </div>
+      <div *ngIf="submitted && form.get('password')?.errors" class="error-mess">
+        <ng-container *ngIf="form.get('password')?.hasError('required')">
+          Password is required.
+        </ng-container>
+        <ng-container *ngIf="form.get('password')?.hasError('minlength') && !form.get('password')?.hasError('required')">
+          Password must be at least 6 characters long.
+        </ng-container>
+        <ng-container *ngIf="form.get('password')?.hasError('pattern') && !form.get('password')?.hasError('minlength') && !form.get('password')?.hasError('required')">
+          Password must contain at least one letter and one number, and only English characters
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="submit" [disabled]="isLoading">
+        <ng-container *ngIf="isLoading; else loginText">
+          <div class="loading"></div>
+        </ng-container>
+        <ng-template #loginText>Log in</ng-template>
+      </button>
+      <p>Don't have an account? <a [routerLink]="['/register']">Register</a></p>
+    </div>
+    <div *ngIf="message" class="alert-mess">{{message}}</div>
+  </form>
+</div>
