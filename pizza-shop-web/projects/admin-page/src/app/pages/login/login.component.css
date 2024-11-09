@@ -1,0 +1,264 @@
+#login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 200px auto;
+  width: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.form-header{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-header h1 {
+  font-weight: bold;
+  font-size: 30px;
+  color: #000000;
+  width: 100%;
+  text-align: center;
+}
+
+.form-header p {
+  font-size: 16px;
+  color: rgba(0,0,0,0.6);
+  width: 100%;
+  font-weight: 400;
+  text-align: center;
+}
+
+#login-form{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 40px auto;
+  position: relative;
+  animation: login-animation 0.7s linear;
+  transition: all 0.4s ease-in-out;
+}
+
+@keyframes login-animation {
+  from{
+    opacity: 0;
+    top: 50px;
+  }
+  to{
+    opacity: 1;
+    top: 0;
+  }
+}
+
+.form-body{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.form-body .form-group{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.form-body .form-group::before{
+  position: absolute;
+  content: "";
+  height: 1px;
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.form-body .form-group:hover::before {
+  border-bottom: 2px solid #000000;
+}
+
+.form-body .form-group.error::before, .form-body .form-group.error::after{
+  border-bottom: 2px solid #ff0000 !important;
+}
+
+.form-body .form-group::after{
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleX(0);
+  border-bottom: 2px solid #ff7500;
+  transition: all 0.4s ease-in-out;
+  pointer-events: none;
+}
+
+.form-body .form-group:focus-within::after {
+  transform: scaleX(1);
+  transition: all 0.4s ease-in-out;
+}
+
+.form-group input{
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+.form-group label{
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  color: rgba(0,0,0,0.4);
+  font-size: 16px;
+  transition: all 0.4s ease-in-out;
+  pointer-events: none;
+}
+
+.form-group input:focus ~ label, .form-group input:not(:placeholder-shown) ~ label{
+  bottom: 35px;
+  color: #ff7500;
+  transition: all 0.4s ease-in-out;
+  font-size: 12px;
+}
+
+.form-group.error label{
+  color: #ff0000 !important;
+}
+
+.form-group input::placeholder{
+  color: transparent;
+  pointer-events: none;
+}
+
+.form-footer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-footer button{
+  background-color: #ff7500;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-align: center;
+  font-weight: 400;
+}
+
+.form-footer button::before{
+  position: absolute;
+  content: '';
+  z-index: -1;
+  height: 100%;
+  left: -10%;
+  top: 0;
+  width: 0;
+  transition: all 0.4s ease-in-out;
+  transform: skew(50deg);
+}
+
+.form-footer button:hover::before{
+  width: 120%;
+  background-color: #000000;
+}
+
+.form-footer p{
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  color: #000000;
+}
+
+.form-footer p a{
+  text-decoration: none;
+  color: #ff7500;
+}
+
+.form-footer p a:hover{
+  text-decoration: underline;
+}
+
+.toggle-password{
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+#password{
+  padding-right: 30px;
+}
+
+.loading{
+  border: 2px solid #ffffff;
+  border-left-color: #ff7500;
+  animation: spin 1s linear infinite;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+button:disabled{
+  background-color: #959595 !important;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-mess{
+  font-size: 14px;
+  color: #ff0000;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px;
+}
+
+.alert-mess{
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  top: 50%;
+}
