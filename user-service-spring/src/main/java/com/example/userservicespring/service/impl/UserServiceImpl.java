@@ -1,7 +1,5 @@
 package com.example.userservicespring.service.impl;
 
-import com.example.userservicespring.dto.request.DeleteUserRequest;
-import com.example.userservicespring.dto.request.UpdateStatusRequest;
 import com.example.userservicespring.dto.request.UpdateUserRequest;
 import com.example.userservicespring.dto.response.UserResponse;
 import com.example.userservicespring.model.Users;
@@ -63,6 +61,7 @@ public class UserServiceImpl implements UserService {
             updateUserRequest.getAddress().ifPresent(user::setAddress);
             updateUserRequest.getRole().ifPresent(role -> user.setRole(Users.Role.valueOf(role)));
             updateUserRequest.getStatus().ifPresent(status -> user.setStatus(Users.Status.valueOf(status)));
+            user.setUpdated_at(LocalDateTime.now());
 
             user.setUpdated_at(LocalDateTime.now());
             Users updatedUser = userRepository.save(user);
@@ -74,24 +73,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public UserResponse<Users> updateStatus(UpdateStatusRequest updateStatusRequest) {
-        try {
-            Users user = userRepository.findById(updateStatusRequest.getUser_id())
-                    .orElseThrow(() -> new RuntimeException("User not found with id " + updateStatusRequest.getUser_id()));
-            user.setStatus(Users.Status.valueOf(updateStatusRequest.getStatus()));
-            Users updatedUser = userRepository.save(user);
-            return new UserResponse<>("200", "Status updated successfully", updatedUser);
-        } catch (Exception e) {
-            return new UserResponse<>("500", "Error updating status");
-        }
-    }
 
     @Override
-    public UserResponse<Void> deleteUser(DeleteUserRequest deleteRequest) {
+    public UserResponse<Void> deleteUser(int user_id) {
         try {
-            Users user = userRepository.findById(deleteRequest.getUser_id())
-                    .orElseThrow(() -> new RuntimeException("User not found with id " + deleteRequest.getUser_id()));
+            Users user = userRepository.findById(user_id)
+                    .orElseThrow(() -> new RuntimeException("User not found with id " + user_id));
             userRepository.delete(user);
             return new UserResponse<>("204", "User deleted successfully");
         } catch (Exception e) {

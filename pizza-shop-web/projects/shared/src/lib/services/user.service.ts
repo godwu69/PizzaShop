@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../environments/environment.development';
-import {LoginRequest, LoginResponse, RegisterRequest, RegisterResponse} from '../models/auth';
 import {Observable} from 'rxjs';
-import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +23,17 @@ export class UserService {
 
   updateUser(data: any) : Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${this.endPoint}/update`, data);
+  }
+
+  createUser(data: any) : Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${this.endPoint}`, data);
+  }
+
+  deleteUser(id: number) : Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${this.endPoint}/delete/${id}`);
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

@@ -1,7 +1,5 @@
 package com.example.userservicespring.controller;
 
-import com.example.userservicespring.dto.request.DeleteUserRequest;
-import com.example.userservicespring.dto.request.UpdateStatusRequest;
 import com.example.userservicespring.dto.request.UpdateUserRequest;
 import com.example.userservicespring.dto.response.UserResponse;
 import com.example.userservicespring.model.Users;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -47,15 +46,10 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/status")
-    public ResponseEntity<UserResponse<Users>> updateStatus(@RequestBody UpdateStatusRequest updateStatusRequest) {
-        UserResponse<Users> response = userService.updateStatus(updateStatusRequest);
-        return ResponseEntity.ok(response);
-    }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<UserResponse<Void>> deleteUser(@RequestBody DeleteUserRequest deleteUserRequest) {
-        UserResponse<Void> response = userService.deleteUser(deleteUserRequest);
+    @DeleteMapping("/delete/{user_id}")
+    public ResponseEntity<UserResponse<Void>> deleteUser(@PathVariable int user_id) {
+        UserResponse<Void> response = userService.deleteUser(user_id);
         return ResponseEntity.ok(response);
     }
 }
