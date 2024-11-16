@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(isBlacklisted);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public UserResponse<Page<Users>> getAllUsers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,

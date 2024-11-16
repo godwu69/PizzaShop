@@ -1,6 +1,5 @@
-package com.example.api_gateway.filter;
+package com.example.api_gateway.util;
 
-import com.example.api_gateway.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,10 +38,10 @@ public class JwtAuthenticationFilter implements WebFilter {
                     .flatMap(isBlacklisted -> {
                         if (!isBlacklisted && jwtUtil.validateJwtToken(jwt)) {
                             String user_id = jwtUtil.getUserIdFromJwtToken(jwt);
-                            System.out.println("Extracted userId from JWT: " + user_id);
+                            System.out.println("Extracted user_id from JWT: " + user_id);
                             String username = jwtUtil.getUsernameFromJwtToken(jwt);
                             String role = jwtUtil.getRoleFromJwtToken(jwt);
-                            System.out.println("Adding headers in JwtAuthenticationFilter - userId: " + user_id + ", role: " + role);
+                            System.out.println("Adding headers in JwtAuthenticationFilter - user_id: " + user_id + ", role: " + role);
 
                             ServerWebExchange modifiedExchange = exchange.mutate()
                                     .request(r -> r.headers(headers -> {

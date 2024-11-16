@@ -17,8 +17,8 @@ public class JwtUtil {
     private final SecretKey accessToken;
 
     public JwtUtil(@Value("${jwt.secret}") String jwtSecret) {
-        byte[] decodedKey = Base64.getDecoder().decode(jwtSecret);
-        this.accessToken = Keys.hmacShaKeyFor(decodedKey);
+        byte[] decodedAccessKey = Base64.getDecoder().decode(jwtSecret.getBytes());
+        this.accessToken = Keys.hmacShaKeyFor(decodedAccessKey);
     }
 
     public boolean validateJwtToken(String token) {

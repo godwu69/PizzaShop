@@ -1,6 +1,6 @@
 package com.example.api_gateway.config;
 
-import com.example.api_gateway.filter.JwtAuthenticationFilter;
+import com.example.api_gateway.util.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -36,11 +36,13 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/v1/orders/list").hasAuthority("ROLE_ADMIN")
-                        .pathMatchers("/api/v1/orders/**").permitAll()
+                        .pathMatchers("/api/v1/users/list").hasAnyAuthority("ROLE_ADMIN", "ROLE_STAFF")
+                        .pathMatchers("/api/v1/products/**").hasAuthority("ROLE_ADMIN")
+                        .pathMatchers("/api/v1/orders/**").hasAuthority("ROLE_ADMIN")
                         .pathMatchers("/api/v1/users/**").permitAll()
                         .pathMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
-                        .pathMatchers("/api/v1/products/**").hasAuthority("ROLE_ADMIN")
+                        .pathMatchers(HttpMethod.GET, "/api/v1/orders/**").permitAll()
+
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
