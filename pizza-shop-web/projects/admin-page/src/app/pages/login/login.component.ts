@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../../../shared/src/lib/services/auth.service';
+import {ToastService} from '../../../../../shared/src/lib/components/toast-service/toast-service';
 
 @Component({
   selector: 'app-login',
@@ -13,13 +14,13 @@ import {AuthService} from '../../../../../shared/src/lib/services/auth.service';
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder, private toastService: ToastService) {
   }
 
   form!: FormGroup;
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     this.submitted = true;
     this.isLoading = true;
     if (this.form.invalid) {
@@ -45,7 +47,6 @@ export class LoginComponent implements OnInit {
         console.log(res);
         localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('refreshToken', res.data.refresh_token);
-
         this.showMessage('Login successfully!', '/dashboard');
       },
       error: (err) => {
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
       },
       complete: () => {
         this.isLoading = false;
+        this.toastService.show({message: 'ok', classname: 'bg-success text-light', delay: 10000 });
       }
     })
   }
