@@ -63,8 +63,15 @@ public class JwtUtil {
 
     public boolean isValidToken(String token) {
         if (isTokenBlacklisted(token)) {
+            System.out.println("Token is blacklisted.");
             return false;
         }
+
+        if (isExpired(token)) {
+            System.out.println("Token has expired.");
+            return false;
+        }
+
         try {
             Jwts.parserBuilder().setSigningKey(accessToken).build().parseClaimsJws(token);
             return true;
@@ -76,6 +83,8 @@ public class JwtUtil {
             return false;
         }
     }
+
+
 
 
     private Claims getClaims(String token, SecretKey key) {

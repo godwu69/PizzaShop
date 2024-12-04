@@ -7,6 +7,7 @@ import com.example.productservice.service.ProductService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,17 +25,21 @@ public class ProductServiceImpl implements ProductService {
         try {
             List<Products> products = productRepository.getAllProducts(product_name, category_id, status, page, size);
             String countSql = "SELECT COUNT(*) FROM Products WHERE 1=1";
+            List<Object> params = new ArrayList<>();
             if (product_name != null && !product_name.isEmpty()) {
                 countSql += " AND product_name LIKE ?";
+                params.add("%" + product_name + "%");
             }
             if (category_id != null) {
                 countSql += " AND category_id = ?";
+                params.add(category_id);
             }
             if (status != null && !status.isEmpty()) {
                 countSql += " AND status = ?";
+                params.add(status);
             }
 
-            List<Integer> totalResults = jdbcTemplate.query(countSql, new Object[]{product_name, category_id, status}, (rs, rowNum) -> rs.getInt(1));
+            List<Integer> totalResults = jdbcTemplate.query(countSql, params.toArray(), (rs, rowNum) -> rs.getInt(1));
             long totalElements = totalResults.isEmpty() ? 0 : totalResults.get(0);
             return new ProductResponse<>("200", "Successfully", List.of(products), totalElements);
         } catch (Exception e) {

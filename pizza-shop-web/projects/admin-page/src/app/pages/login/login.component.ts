@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
     this.submitted = true;
     this.isLoading = true;
     if (this.form.invalid) {
